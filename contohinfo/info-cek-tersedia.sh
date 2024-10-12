@@ -1,0 +1,50 @@
+#!/bin/bash
+domain=$(cat /etc/xray/domain)
+clear
+echo -e "Info Opok Tsel:"
+echo -e "Methode SSL/TLS Websocket Bug Cloudflare"
+echo -e "Payload SSL:"
+echo -e "GET wss://engineering.giphy.com/ HTTP/1.1[crlf]Host: $domain[crlf]Upgrade: websocket[crlf][crlf]"
+echo -e "SNI/Server Spoof:"
+echo -e "engineering.giphy.com"
+echo -e "Server Remote:"
+echo -e "engineering.giphy.com:443"
+
+echo -e "Exra Unli:"
+echo -e "Methode SSL/TLS Websocket Bug Cloudflare"
+echo -e "GET wss://v27.tiktokcdn.com/ HTTP/1.1[crlf]Host: $domain[crlf]Upgrade: websocket[crlf][crlf]"
+echo -e "SNI/Server Spoof:"
+echo -e "v27.tiktokcdn.com"
+echo -e "Server Remote:"
+echo -e "v27.tiktokcdn.com:443"
+
+echo -e "Example Payload SSH SSL WEBSOCKET CLOUDFLARE:"
+echo -e "GET wss://FILL-IN-BUG-WEBSOCKET-CLOUDFLARE/ HTTP/1.1[crlf]Host: FILL-IN-NAME-SUBDOMAIN-SSH-DO NOT USE IP[crlf]Upgrade: websocket[crlf][crlf]"
+echo -e "SNI/Server Spoof:"
+echo -e "FILL-IN-BUG-WEBSOCKET-CLOUDFLARE"
+echo -e "Server Remote:"
+echo -e "FILL-IN-BUG-WEBSOCKET-CLOUDFLARE:443"
+
+echo -e "EXAMPLE Payload Websocket Yang BENAR DAN SALAH"
+echo -e "TRUE EXAMPLE"
+echo -e "GET wss://bugcdncom/ HTTP/1.1[crlf]"
+echo -e "WRONG EXAMPLE"
+echo -e "GET wss://bugcdncom/HTTP/1.1[crlf]"
+echo -e "TRUE EXAMPLE"
+echo -e "GET wss://bugcdncom/ HTTP/1.1[crlf]Host: domainsshcom[crlf]"
+echo -e "WRONG EXAMPLE"
+echo -e "GET wss://bugcdncom/HTTP/1.1[crlf]Host:domainsshcom[crlf]"
+echo -e "TRUE EXAMPLE"
+echo -e "GET wss://bugcdncom/ HTTP/1.1[crlf]Host: domainsshcom[crlf]Upgrade: websocket[crlf][crlf]"
+echo -e "WRONG EXAMPLE"
+echo -e "GET wss://bugcdncom/HTTP/1.1[crlf]Host:domainsshcom[crlf]Upgrade: websocket[crlf][crlf]"
+
+
+echo -e "STATUS RESPONSE TIME INJECT BUG,SSH,VPN"
+echo -e "301/302 = MEANS BUG/PAYLOAD/Port Is BLOCKED BY ISP"
+echo -e "400 – Bad Request = MEANS There's something wrong with payload,subdomain,domain,bug,proxy"
+echo -e "521 - Origin Error = That means the problem is there subdomain/domain"
+echo -e "it might fail when installing the certificate. How to solve the problem. Create another subdomain by typing slhost then typing certv2ray on the VPS,"
+echo -e "if successful then reboot the vps, type reboot"
+echo -e ""
+
