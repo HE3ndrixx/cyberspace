@@ -1,40 +1,32 @@
 #!/bin/bash
-# Cyberpunk🥷☁️☁️☁️☁️☁️☁️☁️☁️☁️🧑‍💻🐼🗽🌊🎰☁️
-# ==========================================
-# Color
-RED='\033[0;31m'
-NC='\033[0m'
-GREEN='\033[0;32m'
-ORANGE='\033[0;33m'
-BLUE='\033[0;34m'
-PURPLE='\033[0;35m'
-CYAN='\033[0;36m'
-LIGHT='\033[0;37m'
-# ==========================================
-# Getting
-MYIP=$(wget -qO- ipinfo.io/ip);
-echo "Checking VPS"
-IZIN=$( curl ipinfo.io/ip | grep $MYIP )
-if [ $MYIP = $MYIP ]; then
-echo -e "${NC}${GREEN}Permission Accepted...${NC}"
-else
-echo -e "${NC}${RED}Permission Denied!${NC}";
-echo -e "${NC}${LIGHT}Fuck You!!"
-exit 0
-fi
-clear
+red='\e[1;31m'
+green='\e[0;32m'
+NC='\e[0m'
+MYIP=$(wget -qO- icanhazip.com);
 apt install jq curl -y
-###DOM#AIN=installer.my.id
-DOMAIN=slxray.cf
-sub=$(</dev/urandom tr -dc a-z0-9 | head -c6)
-SUB_DOMAIN=${sub}.slxray.cf
+rm -f /root/domain
+rm -f /etc/v2ray/domain
+rm -f /etc/xray/domain
+rm -rf /etc/xray/domain
+rm -rf /root/nsdomain
+rm -rf /var/lib/crot/ipvps.conf
+rm nsdomain
+rm domain
+mkdir -p /usr/bin/xray
+mkdir -p /usr/bin/v2ray
+mkdir -p /etc/xray
+mkdir -p /etc/v2ray
+echo "$SUB_DOMAIN" >> /etc/v2ray/domain
+#
+sub=$(</dev/urandom tr -dc a-z0-9 | head -c5)
+subsl=$(</dev/urandom tr -dc a-z0-9 | head -c5)
+DOMAIN=mantapxsl.my.id
+SUB_DOMAIN=onichan-${sub}.mantapxsl.my.id
+NS_DOMAIN=zerosl-${sub}.mantapxsl.my.id
 CF_ID=slinfinity69@gmail.com
-CF_KEY=3dcb550a77cb0a64dacf205243e3ac550f9db
-##SUB_DOMAIN=${sub}.installer.my.id
-##CF_ID=senowahyu62@gmail.com
-##CF_KEY=84570683099becbeb0f04d8086ce6f309c56c
+CF_KEY=dd2c5e0313f122b3c1833471d469b1025f492
 set -euo pipefail
-IP=$(wget -qO- ipinfo.io/ip);
+IP=$(wget -qO- icanhazip.com);
 echo "Updating DNS for ${SUB_DOMAIN}..."
 ZONE=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones?name=${DOMAIN}&status=active" \
      -H "X-Auth-Email: ${CF_ID}" \
@@ -59,17 +51,13 @@ RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_r
      -H "X-Auth-Key: ${CF_KEY}" \
      -H "Content-Type: application/json" \
      --data '{"type":"A","name":"'${SUB_DOMAIN}'","content":"'${IP}'","ttl":120,"proxied":false}')
-
-WILD_DOMAIN="*.$sub"
-set -euo pipefail
-echo ""
-echo "Updating DNS for ${WILD_DOMAIN}..."
+echo "Updating DNS NS for ${NS_DOMAIN}..."
 ZONE=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones?name=${DOMAIN}&status=active" \
      -H "X-Auth-Email: ${CF_ID}" \
      -H "X-Auth-Key: ${CF_KEY}" \
      -H "Content-Type: application/json" | jq -r .result[0].id)
 
-RECORD=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records?name=${WILD_DOMAIN}" \
+RECORD=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records?name=${NS_DOMAIN}" \
      -H "X-Auth-Email: ${CF_ID}" \
      -H "X-Auth-Key: ${CF_KEY}" \
      -H "Content-Type: application/json" | jq -r .result[0].id)
@@ -79,18 +67,22 @@ if [[ "${#RECORD}" -le 10 ]]; then
      -H "X-Auth-Email: ${CF_ID}" \
      -H "X-Auth-Key: ${CF_KEY}" \
      -H "Content-Type: application/json" \
-     --data '{"type":"A","name":"'${WILD_DOMAIN}'","content":"'${IP}'","ttl":120,"proxied":false}' | jq -r .result.id)
+     --data '{"type":"NS","name":"'${NS_DOMAIN}'","content":"'${SUB_DOMAIN}'","ttl":120,"proxied":false}' | jq -r .result.id)
 fi
 
 RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records/${RECORD}" \
      -H "X-Auth-Email: ${CF_ID}" \
      -H "X-Auth-Key: ${CF_KEY}" \
      -H "Content-Type: application/json" \
-     --data '{"type":"A","name":"'${WILD_DOMAIN}'","content":"'${IP}'","ttl":120,"proxied":false}')
+     --data '{"type":"NS","name":"'${NS_DOMAIN}'","content":"'${SUB_DOMAIN}'","ttl":120,"proxied":false}')
+rm -rf /etc/xray/domain
+rm -rf /root/nsdomain
+echo "IP=""$SUB_DOMAIN" >> /var/lib/crot/ipvps.conf
 echo "Host : $SUB_DOMAIN"
 echo $SUB_DOMAIN > /root/domain
-# / / Make Main Directory
-mkdir -p /usr/bin/xray
-mkdir -p /etc/xray
-cp /root/domain /etc/xray
-rm -f /root/cf.sh
+echo "Host SlowDNS : $NS_DOMAIN"
+echo "$NS_DOMAIN" >> /root/nsdomain
+echo "$SUB_DOMAIN" >> /etc/xray/domain
+cd
+
+
